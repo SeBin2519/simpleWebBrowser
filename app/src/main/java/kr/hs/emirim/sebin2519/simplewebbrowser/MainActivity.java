@@ -3,11 +3,13 @@ package kr.hs.emirim.sebin2519.simplewebbrowser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{  //이벤트 핸들러(익명클래스, 형제클래스) => 형제 클래스로!
     //위젯을 멤버필드에 선언
     EditText editUrl;
     Button butMove, butPrev;
@@ -24,11 +26,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         butPrev=(Button) findViewById(R.id.but_prev);
         web=(WebView)findViewById(R.id.web);
 
-        //이벤트 핸들러(익명클래스, 형제클래스) => 형제 클래스로!
-        butMove.setOnClickListener(this);
-
         //이벤트 소스 => butMove(이벤트: OnClick)
-
+        butMove.setOnClickListener(this);//참조값을 이자리에 넣음
+        butPrev.setOnClickListener(this); //참조값을 이자리에 넣음
+        web.setWebViewClient(new WebViewClient()); //웹뷰 클라이언트 설정
+        //웹뷰에 설정
+        WebSettings webSet=web.getSettings();
+        webSet.setBuiltInZoomControls(true);
+        webSet.setJavaScriptEnabled(true);
+       web.loadUrl("http://www.naver.com");
     }
 
     /**
@@ -38,6 +44,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
+        String str=null;
 
+        switch (v.getId()) {
+            case R.id.but_move:
+                str=editUrl.getText().toString();
+                if(!(str.contains("http")))
+                    str="http://"+str;
+                web.loadUrl(str);
+                break;
+            case R.id.but_prev:
+                web.goBack();
+                break;
+        }
     }
 }
