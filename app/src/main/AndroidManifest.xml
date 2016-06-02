@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.hs.emirim.sebin2519.simplewebbrowser">
+    <uses-permission android:name="android.permission.INTERNET"/><!-- 인터넷을 사용할 수 있도록 허가를 받아야함 -->
 
     <application
         android:allowBackup="true"
